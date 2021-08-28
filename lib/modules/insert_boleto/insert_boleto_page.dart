@@ -114,13 +114,12 @@ class _InsertBoletoPageState extends State<InsertBoletoPage> {
         enableSecondaryColor: true,
         primaryLabel: "Cancelar",
         primaryOnPressed: () {
-          print("Clicou!");
           Navigator.pop(context);
         },
         secondaryLabel: "Cadastrar",
         secondaryOnPressed: () {
-          print("Clicou!");
           controller.cadastrarBoleto();
+          Navigator.pop(context);
         },
       ),
     );
