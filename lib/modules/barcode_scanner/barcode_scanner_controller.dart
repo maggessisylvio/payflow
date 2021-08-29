@@ -47,8 +47,6 @@ class BarcodeScannerController {
 
       if (barcode != null && status.barcode.isEmpty) {
         status = BarcodeScannerStatus.barcode(barcode);
-        cameraController!.dispose();
-        await barcodeScanner.close();
       }
       return;
     } catch (e) {
@@ -113,11 +111,9 @@ class BarcodeScannerController {
     }
   }
 
-  void dispose() {
+  Future<void> dispose() async {
     statusNotifier.dispose();
-    barcodeScanner.close();
-    if (status.showCamera) {
-      cameraController!.dispose();
-    }
+    await barcodeScanner.close();
+    cameraController?.dispose();
   }
 }

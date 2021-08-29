@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:playflow/shared/models/boleto_model.dart';
 import 'package:playflow/shared/themes/app_colors.dart';
 import 'package:playflow/shared/themes/app_text_styles.dart';
-import 'package:playflow/shared/widgets/boleto_info/boleto_info.dart';
 import 'package:playflow/shared/widgets/boleto_list/boleto_list_controller.dart';
 import 'package:playflow/shared/widgets/boleto_list/boleto_list_widget.dart';
 

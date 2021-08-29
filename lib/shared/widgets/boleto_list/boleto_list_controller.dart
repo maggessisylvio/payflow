@@ -15,7 +15,6 @@ class BoletoListController {
     try {
       final instance = await SharedPreferences.getInstance();
       final response = instance.getStringList("boletos") ?? <String>[];
-
       boletos = response.map((e) => BoletoModel.fromJson(e)).toList();
     } catch (e) {
       boletos = <BoletoModel>[];
