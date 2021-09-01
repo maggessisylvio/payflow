@@ -40,11 +40,9 @@ class _InsertBoletoPageState extends State<InsertBoletoPage> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: AppColors.background,
         elevation: 0,
-        leading: BackButton(
-          color: AppColors.input,
-        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -115,12 +113,12 @@ class _InsertBoletoPageState extends State<InsertBoletoPage> {
         enableSecondaryColor: true,
         primaryLabel: "Cancelar",
         primaryOnPressed: () {
-          Navigator.pop(context);
+          Navigator.of(context)..pop()..pop();
         },
         secondaryLabel: "Cadastrar",
         secondaryOnPressed: () async {
           await controller.cadastrarBoleto();
-          Navigator.pop(context);
+          Navigator.of(context)..pop()..pop();
         },
       ),
     );

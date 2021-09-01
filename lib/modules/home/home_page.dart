@@ -20,6 +20,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final homeController = HomeController();
+
+  void updateHomeState(dynamic value) {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +45,7 @@ class _HomePageState extends State<HomePage> {
                           style: TextStyles.titleBoldBackground)
                     ]),
               ),
-              subtitle: Text("Mantenha sua constas em dia",
+              subtitle: Text("Mantenha sua contas em dia!",
                   style: TextStyles.captionShape),
               trailing: Container(
                 height: 48,
@@ -84,7 +89,7 @@ class _HomePageState extends State<HomePage> {
             GestureDetector(
               onTap: () async {
                 await Navigator.pushNamed(context, "/barcode_scanner")
-                    .then((value) => setState(() {}));
+                    .then(updateHomeState);
               },
               child: Container(
                 width: 56,
