@@ -112,8 +112,10 @@ class BarcodeScannerController {
   }
 
   Future<void> dispose() async {
+    if (status.showCamera) {
+      cameraController!.dispose();
+    }
     statusNotifier.dispose();
     await barcodeScanner.close();
-    cameraController?.dispose();
   }
 }

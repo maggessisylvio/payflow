@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:playflow/modules/barcode_scanner/barcode_scanner_controller.dart';
 import 'package:playflow/modules/barcode_scanner/barcode_scanner_status.dart';
+import 'package:playflow/shared/models/boleto_model.dart';
 import 'package:playflow/shared/themes/app_colors.dart';
 import 'package:playflow/shared/themes/app_text_styles.dart';
+import 'package:playflow/shared/widgets/boleto_list/boleto_list_controller.dart';
 import 'package:playflow/shared/widgets/bottom_sheet/bottom_sheet_widget.dart';
 import 'package:playflow/shared/widgets/set_label_buttons/set_label_buttons.dart';
 
 class BarcodeScannerPage extends StatefulWidget {
-  const BarcodeScannerPage({Key? key}) : super(key: key);
+  final BoletoListController controller;
+  const BarcodeScannerPage({
+    required this.controller,
+  });
 
   @override
   _BarcodeScannerPageState createState() => _BarcodeScannerPageState();
@@ -21,14 +26,23 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
     controller.getAvailableCameras();
     controller.statusNotifier.addListener(() {
       if (controller.status.hasBarcode) {
-        Navigator.pushNamed(
+        Navigator.pushReplacementNamed(
           context,
           "/insert_boleto",
-          arguments: controller.status.barcode,
+          arguments: [
+            BoletoModel(barcode: controller.status.barcode),
+            widget.controller,
+          ],
         );
       }
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -91,8 +105,14 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
               bottomNavigationBar: SetLabelButtons(
                 primaryLabel: "Inserir código do boleto",
                 primaryOnPressed: () {
-                  Navigator.pushNamed(context, "/insert_boleto");
-                  controller.dispose();
+                  Navigator.pushReplacementNamed(
+                    context,
+                    "/insert_boleto",
+                    arguments: [
+                      null,
+                      widget.controller,
+                    ],
+                  );
                 },
                 secondaryLabel: "Adicionar da galeria",
                 secondaryOnPressed: () {
@@ -115,8 +135,11 @@ class _BarcodeScannerPageState extends State<BarcodeScannerPage> {
                   },
                   secondaryLabel: "Digitar código",
                   secondaryOnPressed: () {
-                    Navigator.pushReplacementNamed(context, "/insert_boleto");
-                    controller.dispose();
+                    Navigator.pushReplacementNamed(context, '/insert_boleto',
+                        arguments: [
+                          null,
+                          widget.controller,
+                        ]);
                   },
                 );
               } else {

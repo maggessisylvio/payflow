@@ -6,8 +6,10 @@ import 'package:playflow/modules/home/home_page.dart';
 import 'package:playflow/modules/insert_boleto/insert_boleto_page.dart';
 import 'package:playflow/modules/login/login_page.dart';
 import 'package:playflow/modules/splash/splash_page.dart';
+import 'package:playflow/shared/models/boleto_model.dart';
 import 'package:playflow/shared/models/user_model.dart';
 import 'package:playflow/shared/themes/app_colors.dart';
+import 'package:playflow/shared/widgets/boleto_list/boleto_list_controller.dart';
 
 class AppWidget extends StatelessWidget {
   AppWidget() {
@@ -30,12 +32,20 @@ class AppWidget extends StatelessWidget {
               user: ModalRoute.of(context)!.settings.arguments as UserModel,
             ),
         "/login": (context) => LoginPage(),
-        "/barcode_scanner": (context) => BarcodeScannerPage(),
-        "/insert_boleto": (context) => InsertBoletoPage(
-              barcode: ModalRoute.of(context) != null
-                  ? ModalRoute.of(context)!.settings.arguments.toString()
-                  : null,
-            ),
+        "/barcode_scanner": (context) {
+          return BarcodeScannerPage(
+            controller: ModalRoute.of(context)!.settings.arguments
+                as BoletoListController,
+          );
+        },
+        "/insert_boleto": (context) {
+          List<dynamic> args =
+              ModalRoute.of(context)!.settings.arguments as List<dynamic>;
+          return InsertBoletoPage(
+            model: args[0] != null ? args[0] as BoletoModel : BoletoModel(),
+            boletoController: args[1] as BoletoListController,
+          );
+        },
       },
     );
   }
